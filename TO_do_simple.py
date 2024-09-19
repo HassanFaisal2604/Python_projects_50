@@ -1,49 +1,66 @@
-tasks = []
-tasks2=[]
-
 def add_task():
-    user_input = input("Enter the task: ")
-    tasks.append(user_input)
+    user_input = input("Enter the task: ").strip() + '\n'
+    with open('TO_do_simple.txt', 'a') as file:
+        file.write(user_input)
 
 def show_tasks():
-    if not tasks:
-        print("No tasks in the list.")
-    else:
-        for i, task in enumerate(tasks, 1):
-            print(f"Task {i}: {task}")
+    try:
+        with open('TO_do_simple.txt', 'r') as file:
+            tasks = file.readlines()
+        if not tasks:
+            print("No tasks in the list.")
+        else:
+            for i, task in enumerate(tasks, 1):
+                print(f"Task {i}: {task.strip()}")
+    except FileNotFoundError:
+        print("No tasks file found. The list is empty.")
+
 def edit_task():
-    if not tasks:
-        print("No tasks to edit.")
-        return
     show_tasks()
     try:
+        with open('TO_do_simple.txt', 'r') as file:
+            tasks = file.readlines()
+        if not tasks:
+            print("No tasks to edit.")
+            return
         edit_index = int(input("Enter the number of the task you want to edit: ")) - 1
         if 0 <= edit_index < len(tasks):
-            new_task = input("Enter the updated task: ")
+            new_task = input("Enter the updated task: ") + '\n'
             tasks[edit_index] = new_task
+            with open('TO_do_simple.txt', 'w') as file:
+                file.writelines(tasks)
             print(f"Task {edit_index + 1} has been updated.")
         else:
             print("Invalid task number.")
     except ValueError:
         print("Please enter a valid number.")
+    except FileNotFoundError:
+        print("No tasks file found. Cannot edit tasks.")
 
 def delete_task():
     show_tasks()
-    if tasks:
-        try:
-            task_index = int(input("Enter the task number you want to mark completed to deleted: ")) - 1
-            if 0 <= task_index < len(tasks):
-                completed_taks=tasks2.append(task_index)
-                deleted_task = tasks.pop(task_index)
-                print(f"Task '{deleted_task}' has been deleted.")
-                print(f"The completed tasks are {tasks}")
-            else:
-                print("Invalid task number.")
-        except ValueError:
-            print("Please enter a valid number.")
+    try:
+        with open('TO_do_simple.txt', 'r') as file:
+            tasks = file.readlines()
+        if tasks:
+            try:
+                task_index = int(input("Enter the task number you want to delete: ")) - 1
+                if 0 <= task_index < len(tasks):
+                    deleted_task = tasks.pop(task_index)
+                    with open('TO_do_simple.txt', 'w') as file:
+                        file.writelines(tasks)
+                    print(f"Task '{deleted_task.strip()}' has been deleted.")
+                else:
+                    print("Invalid task number.")
+            except ValueError:
+                print("Please enter a valid number.")
+        else:
+            print("No tasks to delete.")
+    except FileNotFoundError:
+        print("No tasks file found. Cannot delete tasks.")
 
 while True:
-    todo = input("Enter 'add', 'show', 'delete', edit, or 'exit': ").lower()
+    todo = input("Enter 'add', 'show', 'delete', 'edit', or 'exit': ").lower()
     match todo:
         case 'add':
             add_task()
@@ -54,7 +71,7 @@ while True:
         case 'edit':
             edit_task()
         case 'exit':
-            print("The list of tasks are:", tasks)
+            print("Exiting the program.")
             break
         case _:
             print("Invalid input. Please try again.")
