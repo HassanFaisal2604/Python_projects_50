@@ -1,4 +1,5 @@
 tasks = []
+tasks2=[]
 
 def add_task():
     user_input = input("Enter the task: ")
@@ -30,10 +31,12 @@ def delete_task():
     show_tasks()
     if tasks:
         try:
-            task_index = int(input("Enter the task number you want to delete: ")) - 1
+            task_index = int(input("Enter the task number you want to mark completed to deleted: ")) - 1
             if 0 <= task_index < len(tasks):
+                completed_taks=tasks2.append(task_index)
                 deleted_task = tasks.pop(task_index)
                 print(f"Task '{deleted_task}' has been deleted.")
+                print(f"The completed tasks are {tasks}")
             else:
                 print("Invalid task number.")
         except ValueError:
@@ -54,4 +57,4 @@ while True:
             print("The list of tasks are:", tasks)
             break
         case _:
-            print("Invalid input. Please try again.")      
+            print("Invalid input. Please try again.")
