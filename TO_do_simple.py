@@ -1,7 +1,12 @@
-def add_task():
-    user_input = input("Enter the task: ").strip() + '\n'
-    with open('TO_do_simple.txt', 'a') as file:
-        file.write(user_input)
+def add_task(task=None):
+    if task is None:
+        task = input("Enter the task: ").strip()
+    if task:
+        with open('TO_do_simple.txt', 'a') as file:
+            file.write(task + '\n')
+        print("Task added successfully.")
+    else:
+        print("Task cannot be empty.")
 
 def show_tasks():
     try:
@@ -25,11 +30,14 @@ def edit_task():
             return
         edit_index = int(input("Enter the number of the task you want to edit: ")) - 1
         if 0 <= edit_index < len(tasks):
-            new_task = input("Enter the updated task: ") + '\n'
-            tasks[edit_index] = new_task
-            with open('TO_do_simple.txt', 'w') as file:
-                file.writelines(tasks)
-            print(f"Task {edit_index + 1} has been updated.")
+            new_task = input("Enter the updated task: ").strip()
+            if new_task:
+                tasks[edit_index] = new_task + '\n'
+                with open('TO_do_simple.txt', 'w') as file:
+                    file.writelines(tasks)
+                print(f"Task {edit_index + 1} has been updated.")
+            else:
+                print("Task cannot be empty. No changes made.")
         else:
             print("Invalid task number.")
     except ValueError:
@@ -59,19 +67,23 @@ def delete_task():
     except FileNotFoundError:
         print("No tasks file found. Cannot delete tasks.")
 
-while True:
-    todo = input("Enter 'add', 'show', 'delete', 'edit', or 'exit': ").lower()
-    match todo:
-        case 'add':
-            add_task()
-        case 'show':
+def main():
+    while True:
+        todo_input = input("Enter 'add', 'show', 'delete', 'edit', or 'exit': ").lower().strip()
+        if todo_input.startswith('add'):
+            task = todo_input[3:].strip()
+            add_task(task)
+        elif todo_input.startswith('add'):
             show_tasks()
-        case 'delete':
+        elif todo_input.startswith('delete'):
             delete_task()
-        case 'edit':
+        elif todo_input.startswith('edit'):
             edit_task()
-        case 'exit':
+        elif todo_input.startswith('exit'):
             print("Exiting the program.")
             break
-        case _:
+        else:
             print("Invalid input. Please try again.")
+
+if __name__ == "__main__":
+    main()

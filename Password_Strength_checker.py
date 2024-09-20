@@ -1,19 +1,32 @@
-def check_password_strength(password):
-    criteria = {
-        "Has digits": any(char.isdigit() for char in password),
-        "Has uppercase": any(char.isupper() for char in password),
-        "Sufficient length": len(password) >= 8
-    }
-    
-    print("Password criteria:")
-    for criterion, is_met in criteria.items():
-        print(f"- {criterion}: {'Yes' if is_met else 'No'}")
-    
-    is_strong = all(criteria.values())
-    print(f"\nPassword strength: {'Strong' if is_strong else 'Weak'}")
-    
-    return is_strong
+list1={}
+user_in=input("Enter your Password : ")
+print(user_in)
+check=False
 
-# Main program
-password = input("Enter your password: ")
-check_password_strength(password)
+for digit in user_in:
+    if digit.isdigit():
+     check=True
+
+list1["Has digits"]=check
+check1=False
+
+for digit in user_in:
+    if digit.isupper():
+     check1=True
+
+list1["Captial"]=check1
+check3=0          
+if user_in.__len__()>=8 :
+    check3=True
+    list1["Number of values"]=check3
+else:
+    check3=False
+    
+    list1["Number of values"]=check3
+print(list1)
+
+if all(list1.values()):
+    print("Password is strong")
+else:
+    print("Weak password")    
+    
