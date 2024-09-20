@@ -6,15 +6,14 @@ check=False
 for digit in user_in:
     if digit.isdigit():
      check=True
-
 list1["Has digits"]=check
-check1=False
 
+check1=False
 for digit in user_in:
     if digit.isupper():
      check1=True
-
 list1["Captial"]=check1
+
 check3=0          
 if user_in.__len__()>=8 :
     check3=True
