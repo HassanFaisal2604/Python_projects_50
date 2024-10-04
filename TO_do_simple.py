@@ -6,7 +6,7 @@ while True:
         if task:
             fn.add_task(task)
         else:
-            fn.add_task()
+            print("Please provide a task to add.")
     elif todo_input == 'show':
         fn.show_tasks()
     elif todo_input == 'delete':

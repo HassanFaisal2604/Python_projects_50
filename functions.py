@@ -1,20 +1,20 @@
 import time as d
-print (f"TOday's date is {d.strftime("%b/%m/%y")}")
+print(f"Today's date is {d.strftime('%b/%m/%y')}")
+
 def read_file(filepath='TO_do_simple.txt'):
     with open(filepath, 'r') as file:
-            tasks = file.readlines()
-            return tasks
-    
-def add_task():
-    
-    task = input("Enter the task: ").strip()
+        tasks = file.readlines()
+        return tasks
+
+def add_task(task):  # Accept task as a parameter
+    task = task.strip()  # Ensure no leading/trailing whitespace
     with open('TO_do_simple.txt', 'a') as file:
         file.write(task + '\n')
         print(f"{task} has been added to the list")
 
 def show_tasks():
     try:
-        tasks=read_file()
+        tasks = read_file()
         if not tasks:
             print("No tasks in the list.")
         else:
@@ -26,7 +26,7 @@ def show_tasks():
 def edit_task():
     show_tasks()
     try:
-        tasks=read_file()
+        tasks = read_file()
         if not tasks:
             print("No tasks to edit.")
             return
