@@ -7,6 +7,12 @@ layout = [[gui.Text('My to do app')]]
 window = gui.Window('My to do app', layout=[[label],[input_box,add_button]], 
                     font=('Helvetica',20))
 
-event=window.read()
-print(event)
+while True:
+    
+    event, values=window.read()
+    print(values)
+    print(event)
+    match event:
+        case 'add':
+            functions.add_task()
 window.close()
