@@ -1,7 +1,3 @@
-new
-study
-task
-coding1
-coding2
-wow
 coding
+coding
+study

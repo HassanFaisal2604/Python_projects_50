@@ -1,49 +1,45 @@
 import time
+from pathlib import Path
 
-print(f"Today's date is {time.strftime('%b/%m/%y')}")
+FILEPATH = Path('TO_do_simple.txt')
 
-def read_file(filepath='TO_do_simple.txt'):
-    try:
-        with open(filepath, 'r') as file:
-            tasks = file.readlines()
-            return [task.strip() for task in tasks]  # Return stripped tasks
-    except FileNotFoundError:
-        return []
+def get_current_date():
+    return time.strftime('%b/%d/%y')
+
+def read_tasks():
+    if FILEPATH.exists():
+        with open(FILEPATH, 'r') as file:
+            return [task.strip() for task in file.readlines() if task.strip()]
+    return []
+
+def write_tasks(tasks):
+    with open(FILEPATH, 'w') as file:
+        file.write('\n'.join(tasks))
 
 def add_task(task):
-    task = task.strip()  # Ensure no leading/trailing whitespace
-    with open('TO_do_simple.txt', 'a') as file:
-        file.write(task + '\n')
-        print(f"{task} has been added to the list")
+    tasks = read_tasks()
+    tasks.append(task.strip())
+    write_tasks(tasks)
+    return f"'{task}' has been added to the list"
 
 def show_tasks():
-    tasks = read_file()
-    return tasks  # Return list of tasks to be displayed
+    return read_tasks()
 
 def edit_task(old_task, new_task):
-    tasks = read_file()
+    tasks = read_tasks()
     try:
-        task_index = tasks.index(old_task.strip())  # Find the old task
-        tasks[task_index] = new_task.strip()  # Replace with the new task
-        with open('TO_do_simple.txt', 'w') as file:
-            file.writelines([task + '\n' for task in tasks])  # Write back tasks
-        print(f"Task '{old_task}' has been updated to '{new_task}'")
+        index = tasks.index(old_task.strip())
+        tasks[index] = new_task.strip()
+        write_tasks(tasks)
+        return f"Task '{old_task}' has been updated to '{new_task}'"
     except ValueError:
-        print("Task not found.")
+        return "Task not found."
 
-def delete_task():
-    tasks = read_file()
-    if tasks:
-        try:
-            task_index = int(input("Enter the task number you want to delete: ")) - 1
-            if 0 <= task_index < len(tasks):
-                deleted_task = tasks.pop(task_index)
-                with open('TO_do_simple.txt', 'w') as file:
-                    file.writelines([task + '\n' for task in tasks])
-                print(f"Deleted task: {deleted_task.strip()}")
-            else:
-                print("Invalid task number.")
-        except ValueError:
-            print("Please enter a valid number.")
-    else:
-        print("No tasks to delete.")
+def delete_task(task):
+    tasks = read_tasks()
+    try:
+        tasks.remove(task.strip())
+        write_tasks(tasks)
+        return f"Deleted task: {task}"
+    except ValueError:
+        return "Task not found."

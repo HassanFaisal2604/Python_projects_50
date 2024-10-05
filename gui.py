@@ -4,14 +4,15 @@ import functions
 label = gui.Text('Type in a to do')
 input_box = gui.InputText(tooltip='Enter task', key='todo')
 add_button = gui.Button('add')
-show_button = gui.Button('show')
+
 edit_button = gui.Button('edit')
+Complete_button = gui.Button('Complete')
 display_items = gui.Listbox(values=functions.show_tasks(), enable_events=True, size=(45, 10))
 
 layout = [
     [gui.Text('My to do app')],
     [label],
-    [input_box, add_button, show_button],
+    [input_box, add_button,Complete_button],
     [display_items, edit_button]
 ]
 window = gui.Window('My to do app', layout, font=('Helvetica', 20))
@@ -26,7 +27,7 @@ while True:
             display_items.update(values=functions.show_tasks())  # Update the display_items with the new task
         except Exception as e:
             gui.popup(f"Error adding task: {e}", title="Error")
-
+    
     elif event == 'edit':
         selected_items = display_items.get()  # Get the selected items from the listbox
         if selected_items:  # Check if any item is selected
@@ -40,17 +41,14 @@ while True:
                     gui.popup(f"Error editing task: {e}", title="Error")
         else:
             gui.popup("Please select a task to edit.", title="No Task Selected")
-
-    elif event == 'show':
-        try:
-            todos = functions.show_tasks()
-            if todos:  # Check if todos is not empty before creating a popup
-                gui.popup('Tasks are shown', title='Your tasks', message='\n'.join(todos))  # Changed 'content' to 'message'
-            else:
-                gui.popup('No tasks to show', title='Your tasks')
-        except Exception as e:
-            gui.popup(f"Error showing tasks: {e}", title="Error")
-
+    elif event == 'Complete':
+        selected_items = display_items.get()  # Get the selected items from the listbox
+        if selected_items:  # Check if any item is selected
+            edit_val = selected_items[0]
+            delete_task=functions.delete_task(edit_val) #
+            gui.popup(f" {delete_task} has been deleted")
+            display_items.update(values=functions.show_tasks())
+            
     elif event == gui.WIN_CLOSED:
         break
 
