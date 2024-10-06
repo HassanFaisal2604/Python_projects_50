@@ -7,13 +7,14 @@ add_button = gui.Button('add')
 
 edit_button = gui.Button('edit')
 Complete_button = gui.Button('Complete')
+exit_button = gui.Button('exit')
 display_items = gui.Listbox(values=functions.show_tasks(), enable_events=True, size=(30, 6))
 
 layout = [
     [gui.Text('My to do app')],
     [label],
     [input_box, add_button,Complete_button],
-    [display_items, edit_button]
+    [display_items, edit_button,exit_button]
 ]
 window = gui.Window('My to do app', layout, font=('Helvetica', 20))
 
@@ -48,6 +49,8 @@ while True:
             delete_task=functions.delete_task(edit_val) #
             gui.popup(f" {delete_task} has been deleted")
             display_items.update(values=functions.show_tasks())
+    elif event == 'exit':
+        break
             
     elif event == gui.WIN_CLOSED:
         break
