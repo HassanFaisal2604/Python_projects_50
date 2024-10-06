@@ -7,7 +7,7 @@ add_button = gui.Button('add')
 
 edit_button = gui.Button('edit')
 Complete_button = gui.Button('Complete')
-display_items = gui.Listbox(values=functions.show_tasks(), enable_events=True, size=(45, 10))
+display_items = gui.Listbox(values=functions.show_tasks(), enable_events=True, size=(30, 6))
 
 layout = [
     [gui.Text('My to do app')],
