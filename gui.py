@@ -1,16 +1,18 @@
 import PySimpleGUI as gui
 import functions
+import time 
+gui.theme('Black')
 
 label = gui.Text('Type in a to do')
 input_box = gui.InputText(tooltip='Enter task', key='todo')
 add_button = gui.Button('add')
-
+clock=gui.Text('',key='clock')
 edit_button = gui.Button('edit')
 Complete_button = gui.Button('Complete')
 exit_button = gui.Button('exit')
 display_items = gui.Listbox(values=functions.show_tasks(), enable_events=True, size=(30, 6))
 
-layout = [
+layout = [[clock],
     [gui.Text('My to do app')],
     [label],
     [input_box, add_button,Complete_button],
@@ -19,7 +21,8 @@ layout = [
 window = gui.Window('My to do app', layout, font=('Helvetica', 20))
 
 while True:
-    event, values = window.read()
+    event, values = window.read(timeout=200)
+    window['clock'].update(value=time.strftime("%b %d,%Y %H:%M:%S"))
 
     if event == 'add':
         new_todo = values['todo']  # Get the new todo from the input box
