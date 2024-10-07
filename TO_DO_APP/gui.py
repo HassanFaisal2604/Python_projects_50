@@ -5,10 +5,10 @@ gui.theme('Black')
 
 label = gui.Text('Type in a to do')
 input_box = gui.InputText(tooltip='Enter task', key='todo')
-add_button = gui.Button('add')
+add_button = gui.Button('add',image_source='add.png', pad=(0, 0))
 clock=gui.Text('',key='clock')
 edit_button = gui.Button('edit')
-Complete_button = gui.Button('Complete')
+Complete_button = gui.Button('Complete',image_source="complete.png", pad=(0, 0))
 exit_button = gui.Button('exit')
 display_items = gui.Listbox(values=functions.show_tasks(), enable_events=True, size=(30, 6))
 
