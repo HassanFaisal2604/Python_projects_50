@@ -1,14 +1,21 @@
 import PySimpleGUI as gui
 import functions
 import time 
+import os
+
+
+if not os.path.exists("TO_do_simple.txt"):
+    with open("TO_do_simple.txt", 'w') as file:
+        pass
+        
 gui.theme('Black')
 
 label = gui.Text('Type in a to do')
 input_box = gui.InputText(tooltip='Enter task', key='todo')
-add_button = gui.Button('add',image_source='add.png', pad=(0, 0))
+add_button = gui.Button('add')
 clock=gui.Text('',key='clock')
 edit_button = gui.Button('edit')
-Complete_button = gui.Button('Complete',image_source="complete.png", pad=(0, 0))
+Complete_button = gui.Button('Complete')
 exit_button = gui.Button('exit')
 display_items = gui.Listbox(values=functions.show_tasks(), enable_events=True, size=(30, 6))
 
