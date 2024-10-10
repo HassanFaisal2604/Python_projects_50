@@ -1,6 +1,6 @@
 import PySimpleGUI as gui
 import functions
-import time 
+#import time 
 import os
 
 
@@ -29,7 +29,7 @@ window = gui.Window('My to do app', layout, font=('Helvetica', 20))
 
 while True:
     event, values = window.read(timeout=200)
-    window['clock'].update(value=time.strftime("%b %d,%Y %H:%M:%S"))
+    #window['clock'].update(value=time.strftime("%b %d,%Y %H:%M:%S"))
 
     if event == 'add':
         new_todo = values['todo']  # Get the new todo from the input box
