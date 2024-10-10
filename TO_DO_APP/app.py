@@ -7,10 +7,13 @@ st.subheader("This is a To-do app")
 def add_todo():
     todo=st.session_state["new_todo"]
     functions.add_task(todo)
+    st.experimental_fragment()
     
-for todo in todos:
-    st.checkbox(todo)
-    
-  
+for index,todo in enumerate(todos):
+    box=st.checkbox(todo,key=todo)
+    if box:
+        functions.delete_task(todo)
+        del st.session_state[todo]
+        st.experimental_fragment()
+        
 input_user=st.text_input(label="",placeholder="add new todo",on_change=add_todo,key='new_todo')
-st.session_state
